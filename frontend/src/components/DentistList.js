@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { MapPin, Briefcase, Award, Loader2, Filter } from 'lucide-react';
+import API_URL from '../config';
 
 const DentistList = () => {
   const [dentists, setDentists] = useState([]);
@@ -15,7 +16,7 @@ const DentistList = () => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/dentists')
+    axios.get(`${API_URL}/api/dentists`)
       .then(res => {
         setDentists(res.data.data);
         setFilteredDentists(res.data.data);

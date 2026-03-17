@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Loader2, Users, CalendarDays, ArrowRight, Plus, X } from 'lucide-react';
+import API_URL from '../config';
 
 const AdminPanel = () => {
   const [appointments, setAppointments] = useState([]);
@@ -22,7 +23,7 @@ const AdminPanel = () => {
   }, []);
 
   const fetchAppointments = () => {
-    axios.get('http://localhost:5000/api/appointments')
+    axios.get(`${API_URL}/api/appointments`)
       .then(res => {
         setAppointments(res.data.data);
         setLoading(false);
@@ -35,7 +36,7 @@ const AdminPanel = () => {
 
   const handleDentistSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/dentists', dentistForm)
+    axios.post(`${API_URL}/api/dentists`, dentistForm)
       .then(res => {
         alert('Dentist created successfully!');
         setShowDentistForm(false);
@@ -62,7 +63,7 @@ const AdminPanel = () => {
   };
 
   const handleStatusChange = (appointmentId, newStatus) => {
-    axios.patch(`http://localhost:5000/api/appointments/${appointmentId}/status`, { status: newStatus })
+    axios.patch(`${API_URL}/api/appointments/${appointmentId}/status`, { status: newStatus })
       .then(res => {
         // Update local state
         setAppointments(appointments.map(apt => 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Clock, Calendar as CalendarIcon, User, Layers, ShieldCheck } from 'lucide-react';
+import API_URL from '../config';
 
 const BookAppointment = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const BookAppointment = () => {
     // If dentist object wasn't passed via React Router state, fetch it
     // In a real app we'd have a specific GET /api/dentist/:id route
     if (!dentist) {
-      axios.get('http://localhost:5000/api/dentists')
+      axios.get(`${API_URL}/api/dentists`)
         .then(res => {
           const found = res.data.data.find(d => d._id.toString() === id);
           if (found) setDentist(found);
@@ -48,7 +49,7 @@ const BookAppointment = () => {
       age: parseInt(formData.age, 10)
     };
 
-    axios.post('http://localhost:5000/api/appointments', payload)
+    axios.post(`${API_URL}/api/appointments`, payload)
       .then(res => {
         setLoading(false);
         setSuccess(true);
